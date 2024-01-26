@@ -27,26 +27,40 @@
       </tr>
     </table>
   </div>
-  <h3>Submit an RPL request</h3>
-  <div class="container">
+  <h3 @click="show()">Submit an RPL request</h3>
     <form>
+      <div class="container">
+      <div class="formfield">
       <label>Student code</label>
-      <input type="text">
+      <input type="text" name="studentcode" id="studentcode">
+      </div>
+      <div class="formfield">
       <label>Course name</label>
-      <input type="text">
+      <input type="text" name="coursename" id="coursename">
+      </div>
+      <div class="formfield">
       <label>UT Course name</label>
-      <input type="text">
+      <input type="text" name="utcoursename" id="utcoursename">
+      </div>
+      <div class="formfield">
       <label>Course code</label>
-      <input type="text">
+      <input type="text" name="coursecode" id="coursecode">
+      </div>
+      <div class="formfield">
       <label>UT Course code</label>
-      <input type="text">
+      <input type="text" name="utcoursecode" id="utcoursecode">
+      </div>
+      <div class="formfield">
       <label>Course ETCS</label>
-      <input type="text">
+      <input type="text" name="courseects" id="courseects">
+      </div>
+      <div class="formfield">
       <label>UT Course ETCS</label>
-      <input type="text">
+      <input type="text" name="utcourseects" id="utcourseects">
+      </div>
+      </div>
+      <button @click="submitform()">Submit an RPL request</button>
     </form>
-  </div>
-  <button>Submit an RPL request</button>
   </div>
 </template>
 
@@ -70,6 +84,28 @@ export default {
         .then((data) => (this.rplrequests = data))
         .catch((err) => console.log(err.message));
   },
+    submitform() {
+      var body = {
+        studentcode: document.getElementById("studentcode").value,
+        coursename: document.getElementById("coursename").value,
+        utcoursename: document.getElementById("utcoursename").value,
+        coursecode: document.getElementById("coursecode").value,
+        utcoursecode: document.getElementById("utcoursecode").value,
+        courseects: document.getElementById("courseects").value,
+        utcourseects: document.getElementById("utcourseects").value,
+      }
+      fetch(`http://localhost:3000/api/rplrequests`,{
+        method: 'POST',
+        headers: {'content-type':'application/json'},
+        body: JSON.stringify(body)
+      })
+          .then((response) => response.json())
+          .then((data) => (this.rplrequests = data))
+          .catch((err) => console.log(err.message));
+    },
+    show(){
+
+    }
   },
   mounted() {
     this.fetchRecords();
@@ -93,6 +129,11 @@ h3 {
   display: flex;
   justify-content: center;
 }
+form{
+  display: flex;
+  flex-direction: column;
+  visibility: hidden;
+}
 th {
   background-color: darkgreen;
   padding: 10px 20px;
@@ -100,5 +141,23 @@ th {
 td {
   background-color: palegreen;
   padding: 10px 20px;
+}
+.formfield {
+  display: flex;
+  margin: 2px 2px;
+  flex-direction: column;
+}
+label{
+  background-color: darkgreen;
+  padding: 10px 20px;
+  margin-bottom: 2px;
+}
+button{
+  margin-top: 10px;
+  margin-left: 40%;
+  margin-right: 40%;
+}
+input {
+  background-size: 20px 20px;
 }
 </style>
