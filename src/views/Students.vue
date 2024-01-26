@@ -14,9 +14,39 @@
             <th>UT Course ECTS</th>
             <th>Decision</th>
           </tr>
+      <tr v-for="request in rplrequests" :key="request.id" >
+        <td>{{request.studentcode}}</td>
+        <td>{{request.coursename}}</td>
+        <td>{{request.coursecode}}</td>
+        <td>{{request.courseects}}</td>
+        <td>{{request.utcoursecode}}</td>
+        <td>{{request.utcoursename}}</td>
+        <td>{{request.utcourseects}}</td>
+        <td v-if="request.decision==''">Under proccessing</td>
+        <td v-if="request.decision!=''">{{request.decision}}</td>
+      </tr>
     </table>
-    
   </div>
+  <h3>Submit an RPL request</h3>
+  <div class="container">
+    <form>
+      <label>Student code</label>
+      <input type="text">
+      <label>Course name</label>
+      <input type="text">
+      <label>UT Course name</label>
+      <input type="text">
+      <label>Course code</label>
+      <input type="text">
+      <label>UT Course code</label>
+      <input type="text">
+      <label>Course ETCS</label>
+      <input type="text">
+      <label>UT Course ETCS</label>
+      <input type="text">
+    </form>
+  </div>
+  <button>Submit an RPL request</button>
   </div>
 </template>
 
@@ -27,6 +57,9 @@ export default {
   name: "Students",
   data() {
     return {
+      request:{
+
+      },
       rplrequests: [],
     };
   },
@@ -59,5 +92,13 @@ h3 {
   width: 90%;
   display: flex;
   justify-content: center;
+}
+th {
+  background-color: darkgreen;
+  padding: 10px 20px;
+}
+td {
+  background-color: palegreen;
+  padding: 10px 20px;
 }
 </style>
