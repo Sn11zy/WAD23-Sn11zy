@@ -28,7 +28,7 @@
     </table>
   </div>
   <h3 @click="show()">Submit an RPL request</h3>
-    <form>
+    <form id="rplreq">
       <div class="container">
       <div class="formfield">
       <label>Student code</label>
@@ -104,7 +104,13 @@ export default {
           .catch((err) => console.log(err.message));
     },
     show(){
-
+      var form = document.getElementById("rplreq")
+      console.log(form.getAttribute("visibility"))
+      if (form.style.visibility=='hidden'){
+        form.style.visibility = 'visible'
+      } else {
+        form.style.visibility='hidden'
+      }
     }
   },
   mounted() {
@@ -129,7 +135,7 @@ h3 {
   display: flex;
   justify-content: center;
 }
-form{
+#rplreq{
   display: flex;
   flex-direction: column;
   visibility: hidden;
