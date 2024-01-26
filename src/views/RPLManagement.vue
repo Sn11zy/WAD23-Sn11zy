@@ -13,6 +13,17 @@
             <th>UT Course ECTS</th>
             <th>Decision</th>
           </tr>
+          <tr v-for="request in rplrequests" :key="request.id" >
+            <td>{{request.studentcode}}</td>
+            <td>{{request.coursename}}</td>
+            <td>{{request.coursecode}}</td>
+            <td>{{request.courseects}}</td>
+            <td>{{request.utcoursecode}}</td>
+            <td>{{request.utcoursename}}</td>
+            <td>{{request.utcourseects}}</td>
+            <td><input type="text" id="decision" required v-model="request.decision"></td>
+            <td><button @click="decide(request.id,request.decision)">decision</button></td>
+          </tr>
     </table>
     
   </div>
@@ -25,6 +36,9 @@ export default {
   name: "RPLManagement",
   data() {
     return {
+      request:{
+        decision:""
+      },
       rplrequests: [],
     };
   },
@@ -35,6 +49,16 @@ export default {
         .then((data) => (this.rplrequests = data))
         .catch((err) => console.log(err.message));
   },
+    decide(id,body){
+      fetch(`http://localhost:3000/api/rplrequests/${id}`,{
+        method:'PUT',
+        headers: {'content-type':'application/json'},
+        body: JSON.stringify(body)
+      })
+          .then((response) => response.json())
+          .then((data) => (this.rplrequests = data))
+          .catch((err) => console.log(err.message));
+    }
   },
   mounted() {
     this.fetchRecords();
@@ -58,5 +82,13 @@ h1 {
   border-radius: 20px;
   display: flex;
   justify-content: center;
+}
+th {
+  background-color: darkgreen;
+  padding: 10px 20px;
+}
+td {
+  background-color: palegreen;
+  padding: 10px 20px;
 }
 </style>

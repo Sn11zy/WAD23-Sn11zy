@@ -39,3 +39,16 @@ app.post('/api/rplrequests', async(req,res) =>{
         console.error(e.message);
     }
 });
+app.put('/api/rplrequests/:id', async(req, res) => {
+    try {
+        const { id } = req.params;
+        const grade = req.body;
+        console.log("An PUT request has arrived");
+        const putreq = await pool.query(
+            "UPDATE wadcourse SET (id, decision) = ($1,$2) WHERE id = $1 RETURNING*", [id,body]
+        );
+        res.json(putreq);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
